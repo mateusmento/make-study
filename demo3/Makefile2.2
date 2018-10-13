@@ -3,13 +3,13 @@ CFLAGS = -Iinclude
 
 
 # these rule won't work as implicity rule because it must have
-# the target and the prerequesite matching the pattern % => %.o
+# the target and the prerequisite matching the pattern % => %.o
 bin/main: obj/node.o obj/list.o obj/main.o
 	@mkdir -p bin
 	$(LINK.c) $(OUTPUT_OPTIONS) -o $@ $^
 
 # these rule won't work as implicity rule because it must have
-# the target and the prerequesite matching the pattern %.o => %.c
+# the target and the prerequisite matching the pattern %.o => %.c
 #obj/main.o: src/main.c
 #obj/list.o: src/list.c include/list.h
 #obj/node.o: src/list.c include/node.h
@@ -27,7 +27,7 @@ vpath %.h include
 
 # Make will look up for *.c files in src folder and *.h in include folder.
 # these rule won't work as implicity rule because it must have
-# the target and the prerequesite matching the pattern %.o => %.c
+# the target and the prerequisite matching the pattern %.o => %.c
 obj/main.o: main.c
 obj/list.o: list.c list.h
 obj/node.o: node.c node.h

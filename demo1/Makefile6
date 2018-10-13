@@ -11,7 +11,7 @@ $(OBJ): %.o: %.h
 
 
 # because there is no main.h make will complain about having no
-# rule to generate main.h required as prerequesite in the rule:
+# rule to generate main.h required as prerequisite in the rule:
 #	 $(OBJ): %.o: %.h
 # to avoid this main.h must exist as target of any rule
 main.h:

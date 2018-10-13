@@ -4,7 +4,7 @@ CFLAGS = -Iinclude
 main: node.o list.o main.o
 
 # these rules won't work the expected in demo1. these rule must have the target
-# and the prerequesite matching the pattern %.o => %.c
+# and the prerequisite matching the pattern %.o => %.c
 main.o: src/main.c
 list.o: include/list.h src/list.c
 node.o: src/list.c include/node.h
