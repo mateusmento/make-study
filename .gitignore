@@ -2,3 +2,7 @@
 *.a
 *.d
 *.swp
+bin/
+lib/
+dep/
+obj/
