@@ -1,0 +1,6 @@
+CC = gcc
+CFLAGS = -Iinclude
+
+vpath %.c src
+
+main: node.o list.o main.o

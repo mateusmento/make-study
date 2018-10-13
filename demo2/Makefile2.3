@@ -1,0 +1,10 @@
+CC = gcc
+CFLAGS = -Iinclude
+
+vpath %.c src
+vpath %.h include
+
+main: node.o list.o main.o
+main.o:
+list.o: list.h
+node.o: node.h

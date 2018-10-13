@@ -1,0 +1,30 @@
+VPATH = src
+CFLAGS = -Iinclude
+
+vpath %.h include
+vpath %.o obj
+
+
+calc: write.o fib.o calc.o main.o -lm
+	gcc $^ -o $@
+
+write.o: write.c
+	gcc -c $< $(CFLAGS) -o obj/$@
+
+fib.o: fib.c
+	gcc -c $< $(CFLAGS) -o obj/$@
+
+calc.o: calc.c
+	gcc -c $< $(CFLAGS) -o obj/$@
+
+main.o: main.c
+	gcc -c $< $(CFLAGS) -o obj/$@
+
+write.o: write.h
+fib.o: fib.h types.h
+calc.o: calc.h fib.h types.h
+main.o: include/*.h
+.PHONY: clean
+clean:
+	rm obj/*.o
+	rm calc

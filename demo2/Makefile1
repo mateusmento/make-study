@@ -1,0 +1,15 @@
+CC = gcc
+CFLAGS = -std=c11 -Iinclude
+
+main: node.o list.o main.o
+	$(CC) -o $@ $^
+
+main.o: src/main.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+list.o: src/list.c include/list.h
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+node.o: src/node.c include/node.h
+	$(CC) $(CFLAGS) -c -o $@ $<
+

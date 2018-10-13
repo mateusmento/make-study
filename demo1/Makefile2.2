@@ -1,0 +1,9 @@
+CC = gcc
+CFLAGS = -I.
+
+main: node.o list.o main.o
+
+# will use only the *.c file to build the *.o file. the order is not a problem
+main.o: main.c
+list.o: list.h list.c
+node.o: node.c node.h

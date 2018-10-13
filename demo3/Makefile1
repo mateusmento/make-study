@@ -1,0 +1,19 @@
+CC = gcc
+CFLAGS = -std=c11 -Iinclude
+
+bin/main: obj/node.o obj/list.o obj/main.o
+	@mkdir -p bin
+	$(CC) -o $@ $^
+
+obj/main.o: src/main.c
+	@mkdir -p obj
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+obj/list.o: src/list.c include/list.h
+	@mkdir -p obj
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+obj/node.o: src/node.c include/node.h
+	@mkdir -p obj
+	$(CC) $(CFLAGS) -c -o $@ $<
+

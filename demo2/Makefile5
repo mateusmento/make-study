@@ -1,0 +1,12 @@
+CC = gcc
+CFLAGS = -Iinclude
+
+vpath %.c src
+vpath %.h include
+
+SRC = $(wildcard src/*.c)
+OBJ = $(patsubst src/%.c,%.o,$(SRC))
+
+main: $(OBJ)
+list.o: list.h
+node.o: node.h

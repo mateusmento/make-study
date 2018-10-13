@@ -1,0 +1,9 @@
+main: main.o hello.o
+	gcc $^ -o $@
+
+main.o: main.c
+	gcc -c $<
+
+hello.o: hello.c hello.h
+	gcc -c $<
+

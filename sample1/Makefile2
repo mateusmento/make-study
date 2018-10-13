@@ -1,0 +1,11 @@
+main: main.o hello.o
+	gcc $^ -o $@
+
+main.o hello.o: main.c hello.c
+	gcc -c $^
+
+hello.o: cat hello.h
+
+cat: hello.h
+	cat $<
+	touch cat

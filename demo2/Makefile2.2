@@ -1,0 +1,22 @@
+CC = gcc
+CFLAGS = -Iinclude
+
+main: node.o list.o main.o
+
+# these rules won't work the expected in demo1. these rule must have the target
+# and the prerequesite matching the pattern %.o => %.c
+main.o: src/main.c
+list.o: include/list.h src/list.c
+node.o: src/list.c include/node.h
+
+
+# to be able to use files in separated folders and still use the implicity rule to build
+# %.o files from correspondent %.c file, the path for the files the match a specific
+# pattern must be provided so that Make can look up for those files in that path
+vpath %.c src
+vpath %.h include
+
+# Make will look up for *.c files in src folder and *.h in include folder
+main.o: main.c
+list.o: list.h list.c
+node.o: node.c node.h

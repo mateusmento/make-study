@@ -1,0 +1,33 @@
+CC = gcc
+CFLAGS = -Iinclude
+
+
+# these rule won't work as implicity rule because it must have
+# the target and the prerequesite matching the pattern % => %.o
+bin/main: obj/node.o obj/list.o obj/main.o
+	@mkdir -p bin
+	$(LINK.c) $(OUTPUT_OPTIONS) -o $@ $^
+
+# these rule won't work as implicity rule because it must have
+# the target and the prerequesite matching the pattern %.o => %.c
+#obj/main.o: src/main.c
+#obj/list.o: src/list.c include/list.h
+#obj/node.o: src/list.c include/node.h
+
+
+obj/main.o obj/list.o obj/node.o:
+	@mkdir -p obj
+	$(COMPILE.c) $(OUTPUT_OPTIONS) -o $@ $<
+
+# to be able to use files in separated folders and still use the implicity rule to build
+# %.o files from correspondent %.c file, the path for the files the match a specific
+# pattern must be provided so that Make can look up for those files in that path.
+vpath %.c src
+vpath %.h include
+
+# Make will look up for *.c files in src folder and *.h in include folder.
+# these rule won't work as implicity rule because it must have
+# the target and the prerequesite matching the pattern %.o => %.c
+obj/main.o: main.c
+obj/list.o: list.c list.h
+obj/node.o: node.c node.h

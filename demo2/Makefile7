@@ -1,0 +1,16 @@
+CC = gcc
+CFLAGS = -Iinclude
+
+vpath %.c src
+vpath %.h include
+
+SRC := $(wildcard src/*.c)
+OBJ := $(patsubst src/%.c,%.o,$(SRC))
+DEP := $(patsubst src/%.c,%.d,$(SRC))
+
+main: $(OBJ)
+
+-include $(DEP)
+
+$(DEP): %.d: %.c
+	$(CC) $(CFLAGS) -MM $< -MT "$*.o $@" > $@

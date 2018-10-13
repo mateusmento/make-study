@@ -1,0 +1,4 @@
+CC = gcc
+CFLAGS = -I.
+
+main: node.o list.o main.o

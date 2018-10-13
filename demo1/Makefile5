@@ -1,0 +1,9 @@
+CC = gcc
+CFLAGS = -I.
+
+SRC = $(wildcard *.c)
+OBJ = $(subst .c,.o,$(SRC))
+
+main: $(OBJ)
+list.o: list.h
+node.o: node.h

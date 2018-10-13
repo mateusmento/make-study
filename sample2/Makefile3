@@ -1,0 +1,22 @@
+CFLAGS = -Iinclude
+
+vpath %.c src
+vpath %.h include
+vpath %.o obj
+
+
+calc: write.o fib.o calc.o main.o -lm
+write.o: write.c
+fib.o: fib.c
+calc.o: calc.c
+main.o: main.c
+
+write.o: write.h
+fib.o: fib.h types.h
+calc.o: calc.h fib.h types.h
+main.o: include/*.h
+
+.PHONY: clean
+clean:
+	rm *.o
+	rm calc

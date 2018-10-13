@@ -1,0 +1,20 @@
+CC = gcc
+CFLAGS = -Iinclude
+
+vpath %.c src
+vpath %.h include
+
+SRC := $(wildcard src/*.c)
+OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))
+
+bin/main: $(OBJ)
+	@mkdir -p bin
+	$(LINK.o) -o $@ $^
+
+$(OBJ):
+	@mkdir -p obj
+	$(COMPILE.c) -o $@ $<
+
+obj/main.o: main.c
+obj/list.o: list.c list.h
+obj/node.o: node.c node.h

@@ -1,0 +1,18 @@
+CC = gcc
+CFLAGS = -Iinclude
+
+vpath %.c src
+vpath %.h include
+
+SRC = $(wildcard src/*.c)
+OBJ = $(patsubst src/%.c,%.o,$(SRC))
+
+main: $(OBJ)
+
+$(OBJ): %.o: %.h
+
+# because there is no main.h make will complain about having no
+# rule to generate main.h required as prerequesite in the rule:
+#	 $(OBJ): %.o: %.h
+# to avoid this main.h must exist as target of any rule
+main.h:

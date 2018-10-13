@@ -1,0 +1,12 @@
+CC = gcc
+CFLAGS = -I.
+
+main: node.o list.o main.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+main.o list.o node.o:
+	$(CC) $(CFLAGS) -c $< -o $@
+
+main.o: main.c
+list.o: list.c list.h
+node.o: node.c node.h

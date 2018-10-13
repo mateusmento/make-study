@@ -1,0 +1,23 @@
+CC = gcc
+CFLAGS = -Iinclude
+
+vpath %.c src
+vpath %.h include
+
+EXE_SRC := main.c
+
+LIB_SRC := node.c list.c
+LIB_OBJ := $(subst .c,.o,$(LIB_SRC))
+
+ALL_OBJ := $(subst .c,.o,$(EXE_SRC) $(LIB_SRC))
+ALL_DEP := $(subst .c,.d,$(EXE_SRC) $(LIB_SRC))
+
+main: libcoll.a
+
+libcoll.a: $(LIB_OBJ)
+	$(AR) cr $@ $?
+
+-include $(ALL_DEP)
+
+$(ALL_DEP): %.d: %.c
+	$(CC) $(CFLAGS) -MM $< -MT "$*.o $@" > $@

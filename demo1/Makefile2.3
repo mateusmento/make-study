@@ -1,0 +1,7 @@
+CC = gcc
+CFLAGS = -I.
+
+main: node.o list.o main.o
+main.o:
+list.o: list.h
+node.o: node.h

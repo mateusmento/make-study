@@ -1,0 +1,17 @@
+CC = gcc
+CFLAGS = -Iinclude
+
+vpath %.c src
+vpath %.h include
+
+bin/main: obj/node.o obj/list.o obj/main.o
+	@mkdir -p bin
+	$(LINK.o) -o $@ $^
+
+obj/node.o obj/list.o obj/main.o:
+	@mkdir -p obj
+	$(COMPILE.c) -o $@ $<
+
+obj/main.o: main.c
+obj/list.o: list.c list.h
+obj/node.o: node.c node.h
