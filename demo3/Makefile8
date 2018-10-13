@@ -4,32 +4,53 @@ CFLAGS = -Iinclude
 vpath %.c src
 vpath %.h include
 
-EXE_SRC := main.c
-EXE_OBJ := $(patsubst %.c,obj/%.o,$(EXE_SRC))
-EXE_OUTPUT := bin/main
+EXE_SRC 	:= main.c
+EXE_OBJ 	:= $(patsubst %.c,obj/%.o,$(EXE_SRC))
+EXE_OUTPUT 	:= bin/main
 
-LIB_SRC := node.c list.c
-LIB_OBJ := $(patsubst %.c,obj/%.o,$(LIB_SRC))
-LIB_OUTPUT := lib/libcoll.a
+LIB_SRC 	:= node.c list.c
+LIB_OBJ 	:= $(patsubst %.c,obj/%.o,$(LIB_SRC))
+LIB_OUTPUT 	:= lib/libcoll.a
 
-ALL_OBJ := $(patsubst %.c,obj/%.o,$(EXE_SRC) $(LIB_SRC))
-ALL_DEP := $(patsubst %.c,dep/%.d,$(EXE_SRC) $(LIB_SRC))
+ALL_OBJ 	:= $(patsubst %.c,obj/%.o,$(EXE_SRC) $(LIB_SRC))
+ALL_DEP 	:= $(patsubst %.c,dep/%.d,$(EXE_SRC) $(LIB_SRC))
+
+FOLDERS 	:= bin lib obj dep
 
 
-$(EXE_OUTPUT): $(EXE_OBJ) lib/libcoll.a
-	@mkdir -p bin
+### Prerequisites #############################################
+
+$(EXE_OUTPUT): $(EXE_OBJ) lib/libcoll.a | bin
 	$(LINK.o) -o $@ $^
 
-$(LIB_OUTPUT): $(LIB_OBJ)
-	@mkdir -p lib
+$(LIB_OUTPUT): $(LIB_OBJ) | lib
 	$(AR) cr $@ $?
 
-$(ALL_OBJ): obj/%.o: %.c
-	@mkdir -p obj
+obj/%.o: %.c | obj
 	$(COMPILE.c) -o $@ $<
+
+$(FOLDERS):
+	@mkdir -p $@
 
 -include $(ALL_DEP)
 
-$(ALL_DEP): dep/%.d: %.c
-	@mkdir -p dep
+dep/%.d: %.c | dep
 	$(CC) $(CFLAGS) -MM $< -MT "obj/$*.o $@" > $@
+
+### Commands #################################################
+
+.PHONY: all install clean
+
+all: $(EXE_OUTPUT)
+	@rm -rf obj
+	@rm -rf dep
+
+install: $(LIB_OUTPUT)
+	@rm -rf obj
+	@rm -rf dep
+
+clean:
+	rm -rf obj
+	rm -rf lib
+	rm -rf dep
+	rm -rf bin

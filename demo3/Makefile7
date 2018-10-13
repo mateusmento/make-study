@@ -7,16 +7,19 @@ SRC := $(wildcard src/*.c)
 OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))
 DEP := $(patsubst src/%.c,dep/%.d,$(SRC))
 
-bin/main: $(OBJ)
-	@mkdir -p bin
+FOLDERS := bin obj dep
+
+bin/main: $(OBJ) | bin
 	$(LINK.o) -o $@ $^
 
-$(OBJ): obj/%.o: %.c
-	@mkdir -p obj
+obj/%.o: %.c | obj
 	$(COMPILE.c) -o $@ $<
+
+$(FOLDERS):
+	@mkdir -p $@
 
 -include $(DEP)
 
-$(DEP): dep/%.d: %.c
+dep/%.d: %.c | dep
 	@mkdir -p dep
 	$(CC) $(CFLAGS) -MM $< -MT "obj/$*.o $@" > $@

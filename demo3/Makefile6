@@ -4,15 +4,18 @@ CFLAGS = -Iinclude
 vpath %.c src
 vpath %.h include
 
-SRC = $(wildcard src/*.c)
-OBJ = $(patsubst src/%.c,obj/%.o,$(SRC))
+SRC := $(wildcard src/*.c)
+OBJ := $(patsubst src/%.c,obj/%.o,$(SRC))
 
-bin/main: $(OBJ)
-	@mkdir -p bin
+FOLDERS := bin obj
+
+bin/main: $(OBJ) | bin
 	$(LINK.o) -o $@ $^
 
-$(OBJ): obj/%.o: %.c %.h
-	@mkdir -p obj
+obj/%.o: %.c %.h | obj
 	$(COMPILE.c) -o $@ $<
+
+$(FOLDERS):
+	@mkdir -p $@
 
 main.h:
