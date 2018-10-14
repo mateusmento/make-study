@@ -1,6 +1,7 @@
 CC = gcc
 CFLAGS = -Iinclude
 
+VPATH = lib
 vpath %.c src
 vpath %.h include
 
@@ -20,7 +21,7 @@ FOLDERS 	:= bin lib obj dep
 
 ### Prerequisites #############################################
 
-$(EXE_OUTPUT): $(EXE_OBJ) lib/libcoll.a | bin
+$(EXE_OUTPUT): $(EXE_OBJ) -lcoll | bin
 	$(LINK.o) -o $@ $^
 
 $(LIB_OUTPUT): $(LIB_OBJ) | lib
